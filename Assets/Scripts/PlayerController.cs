@@ -7,19 +7,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float moveSpeed;
 
-    private float bounds = 4.5f;
-
+    [HideInInspector]
+    public Vector3 initialPosition;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        initialPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if (BallScript.canStart)
+        {
+            Move();
+        }   
     }
 
     private void Move()
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
 
         Vector2 playerPosition = transform.position;
-        playerPosition.x = Mathf.Clamp(playerPosition.x + moveInput * moveSpeed * Time.deltaTime, -bounds, bounds);
+        playerPosition.x = Mathf.Clamp(playerPosition.x + moveInput * moveSpeed * Time.deltaTime, -1.5f, 7.5f);
         transform.position = playerPosition;
     }
 }
